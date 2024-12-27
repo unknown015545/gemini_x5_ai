@@ -1,0 +1,4 @@
+.env
+db.json
+lib/
+node_modules/
