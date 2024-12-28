@@ -7,9 +7,10 @@ export function readDB() {
 export function appendToDB(role: string, text: string) {
   let db: any[] = readDB();
 
-  if (db.length > 70) {
+  if (db.length > 60) {
     db.shift();
   }
+
   db.push({
     role,
     parts: [{ text }],

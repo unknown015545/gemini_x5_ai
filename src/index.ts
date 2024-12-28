@@ -5,6 +5,7 @@ import catchError from "try-to-catch";
 import { appendToDB } from "./db";
 import { chat } from "./ai";
 import { client } from "./discord";
+
 import "dotenv/config";
 
 client.on("ready", () => {
@@ -18,6 +19,7 @@ client.on("messageCreate", async (msg) => {
     async () => await generateRequest(msg),
   );
   if (error != null) {
+    console.log(error);
     await catchError(async () => await msg.reply("Error occurred!"));
     return;
   }
@@ -39,12 +41,13 @@ client.on("messageCreate", async (msg) => {
     );
 
     if (error != null) {
+      console.log(error);
       await catchError(async () => await msg.reply("Error occurred!"));
       return;
     }
   }
   const [msgError, message] = await catchError(
-    async () => await msg.reply("*Generating..*."),
+    async () => await msg.reply("*Generating...*"),
   );
   if (msgError) {
     return;
@@ -53,7 +56,8 @@ client.on("messageCreate", async (msg) => {
     async () => await chat.sendMessage(request),
   );
   if (aiError) {
-    await catchError(async () => await msg.reply("Error occurred!"));
+    console.log(aiError);
+    await catchError(async () => await message.edit("Error occurred!"));
     return;
   }
 
@@ -69,7 +73,8 @@ client.on("messageCreate", async (msg) => {
         }),
     );
     if (error) {
-      await catchError(async () => await msg.reply("Error occurred!"));
+      console.log(error);
+      await catchError(async () => await message.edit("Error occurred!"));
       return;
     }
   }

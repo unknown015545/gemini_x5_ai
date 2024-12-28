@@ -7,7 +7,7 @@
 
     "rootDir": "src",
     "outDir": "lib",
-
+    "resolveJsonModule": true,
     "strict": true,
     "alwaysStrict": true,
     "strictFunctionTypes": true,
